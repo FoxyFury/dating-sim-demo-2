@@ -9,7 +9,12 @@ init -1 python:
             #place holder to stop people from moving into the room.
             self.locked = locked
             self.bg = bg
-            
+
+            #stop people from leaving room in wrong direction
+            self.locksouth = False
+            self.locknorth = False
+            self.lockeast = False
+            self.lockwest = False
 
     class Room_Manager():
         def __init__(self):
@@ -44,20 +49,21 @@ init -1 python:
                         self.current_room = room
                         renpy.jump("load_room")
 
+
         def cr_get_neighbors(self):
             dirs = []
 
             for r in self.rooms:
-                if r.x == self.current_room.x and r.y == self.current_room.y+1 and not r.locked:
+                if r.x == self.current_room.x and r.y == self.current_room.y+1 and not r.locked and not r.locksouth:
                     dirs.append('north')
                     continue
-                if r.x == self.current_room.x and r.y == self.current_room.y-1 and not r.locked:
+                if r.x == self.current_room.x and r.y == self.current_room.y-1 and not r.locked and not r.locknorth:
                     dirs.append('south')
                     continue
-                if r.x == self.current_room.x+1 and r.y == self.current_room.y and not r.locked:
+                if r.x == self.current_room.x+1 and r.y == self.current_room.y and not r.locked and not r.lockwest:
                     dirs.append('east')
                     continue
-                if r.x == self.current_room.x-1 and r.y == self.current_room.y and not r.locked:
+                if r.x == self.current_room.x-1 and r.y == self.current_room.y and not r.locked and not r.lockeast:
                     dirs.append('west')
 
             return dirs
@@ -83,7 +89,7 @@ label load_room:
     #scene background ruins_caveroom
     $ renpy.scene()
     $ renpy.show(room_manager.current_room.bg)
-    #with fade
+    with fade
     while True:
         "[room_manager.current_room.desc]"
     return
