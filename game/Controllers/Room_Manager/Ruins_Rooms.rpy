@@ -148,7 +148,7 @@ init -1 python:
     room_manager.add_room(ruins_tunneldivide())
     room_manager.add_room(ruins_overlook())
     room_manager.add_room(ruins_blacktreeroom())
-
+    
     room_manager.current_room = room_manager.rooms[0]
 
 

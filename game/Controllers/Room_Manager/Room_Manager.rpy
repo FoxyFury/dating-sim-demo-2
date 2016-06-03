@@ -15,6 +15,7 @@ init -1 python:
             self.locknorth = False
             self.lockeast = False
             self.lockwest = False
+            self.visited = False
 
     class Room_Manager():
         def __init__(self):
@@ -89,9 +90,11 @@ label load_room:
     #scene background ruins_caveroom
     $ renpy.scene()
     $ renpy.show(room_manager.current_room.bg)
+    $ room_manager.current_room.visited = True
     with fade
+    "[room_manager.current_room.desc]"
     while True:
-        "[room_manager.current_room.desc]"
+        pause
     return
 
 screen show_nav_button:
